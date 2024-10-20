@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #box{
+            background-color:blueviolet;
+            width: 650px;
+            height: 350px;
+            font-size: 20px;
+            border-radius: 20px;
+            color: white;
+            background-position: center;
+            padding-top: 50px;
+
+            
+        }
+        .btn{
+            color: white;
+            background-color: green;
+            padding: 10px;
+            width: 350px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+        
+        
+        h1{
+            
+            color: yellow;
+            text-align: center;
+            font-size: 50px;
+            border-radius: 20px;
+        }
+        h3{
+            color: white;
+            font-size: 40px;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .background{
+            background-image: url(college.jpg);
+            background-repeat: no-repeat;
+            width: 1500px;
+            height: 1500px;
+            background-size: 1600px;
+        }
+        h4{
+            color: white;
+            text-align: center;
+            font-size: 30px;
+
+        }
+        h5{
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="background">
+    <h1> Govt Degree College Lahor</h1>
+    <h3>E-Test: Web Design and Web Development MCQ's</h3>
+    <div class="main">
+        <div id="box">
+            <h2 id="quesBox">1) quiz no 1</h2>
+            <div class="row">
+                A.<input class="options" id="option1" type="radio" value="a" name="option" style="padding-right: 50px;">
+                <label for="option1"> option 1</label>
+            </div>
+            <div class="row">
+                B.<input class="options" id="option2" type="radio" value="b" name="option">
+                <label for="option2"> option 2</label>
+                </div>
+            <div class="row">
+                C.<input class="options" id="option3" type="radio" value="c" name="option">
+                <label for="option3"> option 3</label>
+                </div>
+            <div class="row">
+                D.<input class="options" id="option4" type="radio" value="d" name="option">
+                <label for="option4"> option 4</label>
+                </div>
+            <button class="btn" onclick="submitQuiz()">
+                submit
+            </button>
+        </div>
+    </div>
+    </div>
+    
+</body>
+<script>
+    const questions = [{
+        "que": "1)Which of the following in not valid html tag?",
+        "a": "<div>",
+        "b": "<span>",
+        "c": "<style>",
+        "d": "<text>",
+        "correct": "d",
+    },
+    {
+       'que': "2)What is the purpose of class attribute in html?",
+        "a": "To specify a unique indentifier for an element",
+        "b": "To add interactivity to an element",
+        "c": "To group elements for styling purposes",
+        "d": "To specify the language of the element's content",
+        "correct": "c",
+    },
+    {
+       'que': "3)What is a media query in CSS?",
+        "a": "A way to apply styles based on the user's device or screen size",
+        "b": "A way to apply styles based on the user's location",
+        "c": "A way to apply styles based on the user's browser",
+        "d": "A way to apply styles based on the user's operating system",
+        "correct": "a",
+    },
+    {
+       'que': "4)In java script, what is the result of the expression 1+'2'+3",
+        "a": "123",
+        "b": "6",
+        "c": "7",
+        "d": "15",
+        "correct": "a",
+    },
+    {
+       'que': "5)Which of the following methods can be used to add the end of an array in java script?",
+        "a": "push()",
+        "b": "pop()",
+        "c": "shift()",
+        "d": "unshift()",
+        "correct": "a",
+    },
+    {
+       'que': "6)Which CSS property is used to change the text color of an element?",
+        "a": "font-color",
+        "b": "text-color",
+        "c": "color",
+        "d": "back-ground color",
+        "correct": "c",
+    },
+
+]
+
+    let index = 0;
+    let total = questions.length
+    let right = 0,
+        wrong = 0;
+    var quesBox = document.getElementById("quesBox")
+    var optionInputs = document.querySelectorAll('.options')
+    var loadQuestion = ()=> {
+        if(index === total) {
+            return endQuiz(right, wrong);
+
+        }
+        reset();
+        const data = questions[index]
+        quesBox.innerText = (index, data.que);
+        optionInputs[0].nextElementSibling.innerText = data.a;
+        optionInputs[1].nextElementSibling.innerText = data.b;
+        optionInputs[2].nextElementSibling.innerText = data.c;
+        optionInputs[3].nextElementSibling.innerText = data.d;
+    }
+
+    var submitQuiz = () =>{
+        const data = questions[index]
+        const ans  = getAnswer()
+        console.log(ans, data.correct)
+        if (ans == data.correct){
+            right++;
+        } else {
+            wrong++;
+            }
+            index++;
+            loadQuestion();
+            return;
+        }
+    
+
+    var getAnswer = () => {
+        let answer;
+        optionInputs.forEach(
+            (input) => {
+                if(input.checked){
+                    answer = input.value
+                }
+            }
+        )
+        return answer;
+    }
+
+    const reset = () => {
+        optionInputs.forEach(
+            (input) => {
+                input.checked = false
+            }
+        )
+    }
+    
+    const endQuiz = (right, wrong) => {
+        document.getElementById("box").innerHTML = '<h4> Thank you</h4> <h5> '+right+'/'+total +'are correct</h5>'
+        }
+    
+
+    loadQuestion();
+</script>
+</html>
